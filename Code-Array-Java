@@ -1,0 +1,214 @@
+package listarray;
+import java.util.*;
+public class listarray {
+    
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+         int i, j,q,c=1,k=0;
+         
+         System.out.println("Enter the number of students : ");
+         int n= sc.nextInt();
+//Array containing the name of all students we get as input
+         ArrayList<String> students = new ArrayList<String>();
+          for( i=0; i<n;i++)
+                {
+                Scanner scc = new Scanner(System.in);
+                System.out.println("Enter the name of the student : ");
+                students.add(scc.nextLine());   
+                }
+
+//----------------------------------------------------------------------------------------------------------------------------------
+//Making a list 2D array containing all the possible combinations
+          
+          ArrayList<ArrayList<String>> comb = new ArrayList<ArrayList<String>>();
+          for(i=0;i<n;i++) 
+            {
+              ArrayList<String> temporary = new ArrayList<String>();
+              for(j=0; j<n;j++)
+                {
+                 if (i!=j) temporary.add(students.get(i)+"--"+students.get(j));
+                }
+              comb.add(temporary);
+              
+            }
+
+//--------------------------------------------------------------------------------------------------------------         
+        
+          for (i=0; i<n/2;i++) 
+                        {                     
+                         ArrayList<String> temporary = new ArrayList<String>();
+                         for(j=0;j<n;j+=2) 
+                             
+                            {
+                             temporary.add(comb.get((j)%(n-1)).get((2*i+j)%(n-1)));
+                            }
+
+                            System.out.println("Project   "+c+"  : "+temporary);c++;
+                            for( q=0;q<temporary.size();q++) temporary.set(q, temporary.get(q).split("--")[1]+"--"+temporary.get(q).split("--")[0]);
+                            System.out.println("Project   "+c+"  : "+temporary);c++;
+                            }           
+//---------------------------------------------------------------------------------------------------------------------------
+                  
+                  for(i=3;i<n-1;i+=4) 
+                        {
+                         ArrayList<String> temporary = new ArrayList<String>();
+                         
+                         for(j=0;j<n/2;j++) temporary.add(comb.get(j).get((i+j)%(n-1)));
+                         
+                         System.out.println("Project   "+c+"  : "+temporary);c++;
+                         for( q=0;q<temporary.size();q++) temporary.set(q, temporary.get(q).split("--")[1]+"--"+temporary.get(q).split("--")[0]);
+                         System.out.println("Project   "+c+"  : "+temporary);c++;
+                         }                
+//---------------------------------------------------------------------------------------------------------------------------------------
+                  
+                  for (i=1;i<n-1;i+=4) 
+                    {
+                        ArrayList<String> temporary = new ArrayList<String>();
+                        
+                        for(j=0;j<n/2;j++) 
+                            {
+                            
+                            if (j%2==0) 
+                                {
+                                temporary.add(comb.get((k)%(n-1)).get((i+k)%(n-1)));k++;
+                                }
+                            else 
+                                {
+                                temporary.add(comb.get(k%(n-1)).get((i+k)%(n-1)));
+                                k+=3;
+                                }
+                            
+                            }
+                        System.out.println("Project   "+c+"  : "+temporary);c++;
+                        for( q=0;q<temporary.size();q++) temporary.set(q, temporary.get(q).split("--")[1]+"--"+temporary.get(q).split("--")[0]);
+                        System.out.println("Project   "+c+"  : "+temporary);c++;                      
+                    }
+                  
+          
+}   
+}
+package listarray;
+import java.util.*;
+public class listarray 
+{   
+    public static void main(String[] args) 
+{       
+//Filling a list with the anme of al students       
+         Scanner sc = new Scanner(System.in);   
+          int c=1,i,j,q,k=0,index;
+         System.out.println("Enter the number of students : ");
+         int n= sc.nextInt();
+         String[] s = new String[n];
+          for(i=0; i<n;i++)
+                {
+                Scanner scc = new Scanner(System.in);
+                System.out.println("Enter the name of the student : ");             
+                s[i] = scc.nextLine();      
+                }
+          
+//Making an array containing all possible combinations
+          String[][] comb = new String[n][n-1];       
+          for (i=0; i<n; i++) 
+            {k=0;
+              for(j=0; j<n; j++) 
+                {
+                  if(i==j)
+                    {
+                      k=1;
+                      continue;
+                    }
+                  else 
+                    {
+                      comb[i][j-k] = (String.valueOf(s[i])+"--"+String.valueOf(s[j]));                
+                    }
+              
+                }
+              } 
+//------------------------------------------------------
+          for(i=0;i<(n/2);i++) 
+            {
+              String[] a=new String[n/2];
+              index=0;
+              for(j=0; j<n;j+=2) 
+                {
+                  a[index] = comb[(j)%(n-1)][(2*i+j)%(n-1)];
+                  index++;                
+                }
+              System.out.print("Project "+c+" : ");
+              System.out.println(Arrays.toString(a));c++;
+              //this following loop is to reverse [A--B] into [B--A]
+              for(q=0;q<a.length;q++) 
+                {
+                  String b = new String();
+                  b=a[q];
+                  String[] parts = b.split("--");
+                  String reverse = new String();
+                  reverse =parts[1]+"--"+parts[0];
+                  a[q]=reverse;}
+                  
+                  System.out.print("Project "+c+" : ");
+                  System.out.println(Arrays.toString(a));
+                  c++;
+                }                 
+       //------------------------------------------ 
+          for(i=3; i<n-1;i+=4) {              
+              String[] a=new String[n/2];
+              index=0;
+              for(j=0;j<n/2;j++) 
+                {
+                  a[index] = comb[j][(i+j)%(n-1)];index++;
+                }
+
+              System.out.print("Project "+c+" : ");
+              System.out.println(Arrays.toString(a));c++;
+              //Code to print the reversed array
+              
+              for(q=0;q<a.length;q++) 
+                {
+                  String b = new String();
+                  b=a[q];
+                  String[] parts = b.split("--");
+                  String reverse = new String();
+                  reverse =parts[1]+"--"+parts[0];
+                  a[q]=reverse;
+                 }
+                  
+                  System.out.print("Project "+c+" : ");
+                  System.out.println(Arrays.toString(a));
+                  c++;
+                  
+                }
+        //-------------------------------------------------
+          for(i=1;i<n-1;i+=4) {
+              index=0;
+              String[] a = new String[n/2];
+              for(j=0;j<n/2;j++)
+              {               
+                  if (j%2==0) {
+                      a[j] = comb[(k)%(n-1)][(i+k)%(n-1)];k++;
+                  }
+                  else {
+                      a[j]=comb[(k)%(n-1)][(i+k)%(n-1)];k+=3;
+                  }
+                  index++;
+              }           
+              System.out.print("Project "+c+" : ");
+              System.out.println(Arrays.toString(a));c++;             
+              //Print the reversed
+              for(q=0;q<a.length;q++) 
+                  {
+                  String b = new String();
+                  b=a[q];
+                  String[] parts = b.split("--");
+                  String reverse = new String();
+                  reverse =parts[1]+"--"+parts[0];
+                  a[q]=reverse;
+                  }
+              
+              System.out.print("Project "+c+" : ");
+              System.out.println(Arrays.toString(a));
+              c++;            
+          }
+}   
+}
